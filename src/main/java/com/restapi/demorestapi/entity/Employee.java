@@ -19,13 +19,13 @@ public class Employee {
 
     @NotNull
     @NotBlank
-    @Size(min = 2, max = 15)
+    @Size(min = 2, max = 25)
     @Column(name = "employee_name")
     private  String employeeName;
 
     @NotNull
     @NotBlank
-    @Size(min = 5, max = 15)
+    @Size(min = 5, max = 20)
     @Column(name = "employee_phone")
     private String employeePhone;
 
@@ -37,7 +37,7 @@ public class Employee {
 
     @NotNull
     @NotBlank
-    @Size(min = 3, max = 30)
+    @Size(min = 3, max =60)
     @Column(name = "employee_designation")
     private  String employeeDesignNation;
 

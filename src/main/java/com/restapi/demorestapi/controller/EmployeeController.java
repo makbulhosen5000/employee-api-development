@@ -11,6 +11,7 @@ import com.restapi.demorestapi.helper.Helper;
 import com.restapi.demorestapi.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,12 +25,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/employee/create")
+@RequestMapping("/api/v1/employees")
 public class EmployeeController {
     Logger logger = LoggerFactory.getLogger(EmployeeController.class);
-
+    @Autowired
     private EmployeeService employeeService;
-    @PostMapping("api/employee/save")
+    @PostMapping("/save/")
     public ResponseEntity<Employee> storeEmployee(@RequestBody EmployeeDto dto) {
         if (dto.getEmployeeName() != null && dto.getEmployeePhone() != null && dto.getEmployeeEmail() != dto.getEmployeeDesignNation()) {
             if (dto.getEmployeeName().isBlank() || dto.getEmployeePhone().isBlank() || dto.getEmployeeEmail().isBlank() || dto.getEmployeeDesignNation().isBlank()) {
@@ -74,7 +75,7 @@ public class EmployeeController {
 
         }
 
-    @PutMapping("employee/update/id/{employeeId}")
+    @PutMapping("/update/by/id/{employeeId}")
     public ResponseEntity<Employee> updateEmployeeById(@PathVariable("employeeId") Long employeeId, @RequestBody EmployeeDto dto){
         Optional<Employee> optionalEmployee = employeeService.findEmployeeById(employeeId);
         if (optionalEmployee.isPresent()) {
@@ -110,7 +111,7 @@ public class EmployeeController {
             throw new NotFoundException("No employee found by this Id.");
         }
     }
-    @DeleteMapping("/employee/delete/id/{employeeId}")
+    @DeleteMapping("/delete/by/id/{employeeId}")
     public ResponseEntity<Void> deleteEmployeById(@PathVariable("employeeId") Long employeeId) {
 
         Optional<Employee> optionalEmployee = employeeService.findEmployeeById(employeeId);
@@ -133,7 +134,7 @@ public class EmployeeController {
         }
 
     }
-    @GetMapping("employee/find/id/{emloyeeId}")
+    @GetMapping("/find/by/id/{emloyeeId}")
     public ResponseEntity<Employee> findEmployeById(@PathVariable("emloyeeId") Long emloyeeId) {
 
         Optional<Employee> optionalEmployee = employeeService.findEmployeeById(emloyeeId);
@@ -148,7 +149,7 @@ public class EmployeeController {
         }
 
     }
-    @GetMapping("/employee/find/all/")
+    @GetMapping("/find/all/")
     public ResponseEntity<List<Employee>> findAllEmployees(@PageableDefault(size = 15) Pageable pageable) {
 
         Page<Employee> contents = employeeService.findAllEmployees(pageable);
